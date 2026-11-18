@@ -24,12 +24,11 @@ PHP-FPM
 -------
 Active Worker (max)              : $worker_max
 CPU Wait Time (avg)              : $cpu_wait_avg%
-Involuntary Context Switch (avg) : $nvcsw_avg /s
 
 Client
 ------
 Request / Failure       : $request / $failure
 Throughput              : $throughput request/s
-Response Time (p50)     : $p50 s
-Response Time (p99)     : $p99 s
+Response Time (avg)     : $latency_avg s
+Response Time (max)     : $latency_max s
 RESULT
