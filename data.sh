@@ -22,8 +22,8 @@ I/O Wait Time (avg)          : $iowait_avg%
 
 PHP-FPM
 -------
-Active Worker (max)              : $worker_max
-CPU Wait Time (avg)              : $cpu_wait_avg%
+Active Worker (max)     : $worker_max
+CPU Wait Time (avg)     : $cpu_wait_avg%
 
 Client
 ------
