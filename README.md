@@ -6,7 +6,7 @@ Prerequisite: Linux Environment Setup Guide (Apache, PHP-FPM, MariaDB, WordPress
 
 ```bash
 # Host 2222 -> Guest 22 (SSH), Host 8080 -> Guest 80 (Web)
-ssh -p 2222 ksj@localhost                                                    # check SSH
+ssh -p 2222 usernmae@localhost                                                    # check SSH
 curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8080/wordpress/    # check Web (200)
 ```
 
@@ -25,15 +25,15 @@ grep WP_ENVIRONMENT_TYPE /var/www/html/wordpress/wp-config.php               # c
 curl -s -u "admin:<application password>" "http://localhost:8080/wordpress/?rest_route=/wp/v2/users/me"   # check
 ```
 
-## 4. .env (Mac, src/)
+## 4. .env
 
 ```bash
 cat > .env <<'EOF'
-HOST="ksj@localhost"
+HOST="username@localhost"
 SSH_PORT=2222
 HTTP_PORT=8080
 URL="http://localhost:${HTTP_PORT}/wordpress/?rest_route=/wp/v2/posts"
-AUTH="admin:<application password>"
+AUTH="<wordpress userID>>:<application password>"
 DURATION=20
 EOF
 ```
