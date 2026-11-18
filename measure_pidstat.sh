@@ -13,13 +13,14 @@
 # 7: %wait -> "CPU_WAIT"
 # 8: %CPU
 # 9: CPU
-# 10: cswch/s
-# 11: nvcswch/s
+# 10: cswch/s -> "TOTAL_CS"
+# 11: nvcswch/s -> "TOTAL_CS"
 # 12: Command
 
 # output (example):
 #   worker_max=12
 #   cpu_wait_avg=39.0
+#   total_cs_avg=560.0
 # $1 = measurement time (s)
 
 avg() { awk '{sum += $1} END {printf "%.1f", sum / NR}'; }
@@ -29,6 +30,9 @@ DATA=$(pidstat -h -u -w -U apache -C php-fpm 1 "$1" | awk '$2 == "apache"')
 
 WORKER_MAX=$(echo "$DATA" | awk '{print $1}' | uniq -c | sort -n | tail -1 | awk '{print $1}')
 CPU_WAIT=$(echo "$DATA" | awk '{print $7}' | avg)
+# total context switch per second (voluntary + involuntary, sum of all workers)
+TOTAL_CS=$(echo "$DATA" | awk '{cs[$1] += $10 + $11} END {for (t in cs) print cs[t]}' | avg)
 
 echo "worker_max=$WORKER_MAX"
 echo "cpu_wait_avg=$CPU_WAIT"
+echo "total_cs_avg=$TOTAL_CS"

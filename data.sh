@@ -24,6 +24,7 @@ PHP-FPM
 -------
 Active Worker (max)     : $worker_max
 CPU Wait Time (avg)     : $cpu_wait_avg%
+Context Switch (avg)    : $total_cs_avg /s
 
 Client
 ------

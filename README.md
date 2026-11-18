@@ -43,5 +43,6 @@ EOF
 ```bash
 bash intervention.sh 12 && bash main.sh   # Reproduction
 bash intervention.sh 2  && bash main.sh   # Intervention
-bash intervention.sh 12                   # restore
+
+tail -n 6 $(ls logs/*.log | tail -2) # Compare the last 2 logs
 ```
