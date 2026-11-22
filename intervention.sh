@@ -9,4 +9,4 @@ RESTART="sudo systemctl restart php-fpm"
 CHECK="pgrep -u apache -c php-fpm"
 
 echo "[Intervention] pm.max_children = $1"
-ssh -t -p "$SSH_PORT" "$HOST" "$CHANGE && $RESTART && echo -n 'worker: ' && $CHECK"
+ssh -t -p "$SSH_PORT" -o LogLevel=ERROR "$HOST" "$CHANGE && $RESTART && echo -n 'worker: ' && $CHECK"
