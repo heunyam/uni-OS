@@ -5,14 +5,14 @@
 
 # input columns:
 # 1: http_code -> "FAILURE" (not 201)
-# 2: time_total -> LATENCY_AVG, LATENCY_MAX
+# 2: time_total -> LATENCY_P50, LATENCY_P99
 
 # output (example):
 #   request=1520
 #   failure=0
 #   throughput=95.00
-#   latency_avg=0.081
-#   latency_max=0.312
+#   latency_p50=0.081
+#   latency_p99=0.312
 # $1 = load time (s)
 
 # Step 1. Drop unfinished requests (000 = cut by timeout), sort by response time
@@ -24,11 +24,11 @@ FAILURE=$(echo "$DATA" | awk '$1 != 201' | awk 'END {print NR}')   # 201 = Creat
 THROUGHPUT=$(awk -v r="$REQUEST" -v s="$1" 'BEGIN {printf "%.2f", r / s}')
 
 # Step 3. Percentile = the line at that position in the sorted list
-LATENCY_AVG=$(echo "$DATA" | sed -n "$((REQUEST * 50 / 100))p" | awk '{print $2}')
-LATENCY_MAX=$(echo "$DATA" | sed -n "$((REQUEST * 99 / 100))p" | awk '{print $2}')
+LATENCY_P50=$(echo "$DATA" | sed -n "$((REQUEST * 50 / 100))p" | awk '{print $2}')
+LATENCY_P99=$(echo "$DATA" | sed -n "$((REQUEST * 99 / 100))p" | awk '{print $2}')
 
 echo "request=$REQUEST"
 echo "failure=$FAILURE"
 echo "throughput=$THROUGHPUT"
-echo "latency_avg=$LATENCY_AVG"
-echo "latency_max=$LATENCY_MAX"
+echo "latency_p50=$LATENCY_P50"
+echo "latency_p99=$LATENCY_P50"

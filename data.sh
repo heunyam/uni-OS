@@ -31,6 +31,6 @@ Client
 ------
 Request / Failure       : $request / $failure
 Throughput              : $throughput request/s
-Response Time (avg)     : $latency_avg s
-Response Time (max)     : $latency_max s
+Response Time (p50)     : $latency_p50 s
+Response Time (p99)     : $latency_p99 s
 RESULT

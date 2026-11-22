@@ -15,7 +15,7 @@ echo "Collecting Linux environment data..."
 $SSH 'bash -s' < measure_env.sh > tmp/env.out
 
 # Summary header
-echo "Parallel Runnable(avg) CPU_Wait(%) Throughput(req/s) Latency(avg/s) Latency(max/s)" > tmp/summary.out
+echo "Parallel Runnable(avg) CPU_Wait(%) Throughput(req/s) Latency(p50/s) Latency(p99/s)" > tmp/summary.out
 
 for PARALLEL in 4 8 12 16; do
   export PARALLEL
@@ -47,11 +47,11 @@ for PARALLEL in 4 8 12 16; do
   } >> "$LOG"
 
   # summary row ("-" if data is missing)
-  unset runnable_avg cpu_wait_avg throughput latency_avg latency_max
+  unset runnable_avg cpu_wait_avg throughput latency_p50 latency_p99
   source tmp/vmstat.out; 
   source tmp/pidstat.out; 
   source tmp/request.out
-  echo "$PARALLEL ${runnable_avg:--} ${cpu_wait_avg:--} ${throughput:--} ${latency_avg:--} ${latency_max:--}" >> tmp/summary.out
+  echo "$PARALLEL ${runnable_avg:--} ${cpu_wait_avg:--} ${throughput:--} ${latency_p50:--} ${latency_p99:--}" >> tmp/summary.out
 
   sleep 5    # cool down
 done
