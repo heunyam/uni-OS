@@ -17,7 +17,7 @@ $SSH 'bash -s' < measure_env.sh > tmp/env.out
 # Summary header
 echo "Parallel Runnable(avg) CPU_Wait(%) Throughput(req/s) Latency(p50/s) Latency(p99/s)" > tmp/summary.out
 
-for PARALLEL in 4 8 12 16; do
+for PARALLEL in 1 4 8 12 16; do
   export PARALLEL
   echo
   echo "===== Test Case: --parallel-max $PARALLEL ====="
