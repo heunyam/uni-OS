@@ -7,7 +7,7 @@ export URL AUTH DURATION
 
 # share one ssh connection, not on windows
 SSH="ssh -p $SSH_PORT -o LogLevel=ERROR -o ServerAliveInterval=10 -o ServerAliveCountMax=4"
-if [[ $OSTYPE != msys ]]; then
+if [[ $OSTYPE != msys* && $OSTYPE != cygwin* ]]; then
   SSH="$SSH -o ControlMaster=auto -o ControlPath=/tmp/ssh-%C -o ControlPersist=120"
 fi
 SSH="$SSH $HOST"
