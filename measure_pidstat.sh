@@ -27,7 +27,8 @@
 avg() { awk '{sum += $1} END {printf "%.1f", sum / NR}'; }
 
 # -U apache: only worker processes (master is root)
-DATA=$(pidstat -h -u -w -U apache -C php-fpm 1 "$1" | awk '$2 == "apache"')
+# LC_ALL=C: fix Time format to 24h (no AM/PM column)
+DATA=$(LC_ALL=C pidstat -h -u -w -U apache -C php-fpm 1 "$1" | awk '$2 == "apache"')
 
 WORKER_MAX=$(echo "$DATA" | awk '{print $1}' | uniq -c | sort -n | tail -1 | awk '{print $1}')
 CPU_WAIT=$(echo "$DATA" | awk '{print $7}' | avg)

@@ -5,8 +5,12 @@ cd "$(dirname "$0")"
 source .env
 export URL AUTH DURATION
 
-# multiple ssh connections are unstable (UTM NAT), so share one connection
-SSH="ssh -p $SSH_PORT -o LogLevel=ERROR -o ControlMaster=auto -o ControlPath=/tmp/ssh-%C -o ControlPersist=120 $HOST"
+# share one ssh connection, not on windows
+SSH="ssh -p $SSH_PORT -o LogLevel=ERROR -o ServerAliveInterval=10 -o ServerAliveCountMax=4"
+if [[ $OSTYPE != msys ]]; then
+  SSH="$SSH -o ControlMaster=auto -o ControlPath=/tmp/ssh-%C -o ControlPersist=120"
+fi
+SSH="$SSH $HOST"
 LOG="logs/result_$(date +%Y%m%d_%H%M%S).log"
 mkdir -p tmp logs
 
